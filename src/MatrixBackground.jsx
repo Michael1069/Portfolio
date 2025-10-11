@@ -7,41 +7,61 @@ const MatrixBackground = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
 
+    // Set initial canvas size
     const setCanvasSize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+      columns = Math.floor(canvas.width / fontSize);
+      drops = Array(columns).fill(0);
     };
-    setCanvasSize();
-    window.addEventListener("resize", setCanvasSize);
 
     const japaneseChars = "私はアビラシャ・モダックが大好きです";
     const fontSize = 20;
-    let columns = Math.floor(canvas.width / fontSize);
+    let columns = Math.floor(window.innerWidth / fontSize);
     let drops = Array(columns).fill(0);
+    let animationFrameId;
 
+    // Setup resize listener
+    setCanvasSize();
+    window.addEventListener("resize", setCanvasSize);
+
+    // Main draw function
     const draw = () => {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      // Background fade effect
+      ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = "#f43f5e"; // red-ish like your theme
+      // Text + glow
+      ctx.shadowBlur = 10;
+      ctx.shadowColor = "#f43f5e";
+      ctx.fillStyle = "#f43f5e";
       ctx.font = `${fontSize}px monospace`;
 
       for (let i = 0; i < drops.length; i++) {
         const text = japaneseChars[Math.floor(Math.random() * japaneseChars.length)];
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-        drops[i]++;
+        // Reset drop when it reaches bottom randomly
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+
+        drops[i] += 0.8; // controls fall speed
       }
     };
 
+    // Animation loop
     const animate = () => {
       draw();
-      requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(animate);
     };
     animate();
 
-    return () => window.removeEventListener("resize", setCanvasSize);
+    // Cleanup on unmount
+    return () => {
+      window.removeEventListener("resize", setCanvasSize);
+      cancelAnimationFrame(animationFrameId);
+    };
   }, []);
 
   return (
