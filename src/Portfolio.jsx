@@ -414,7 +414,8 @@ export default function Portfolio() {
       {/* FOOTER */}
       <footer className="py-10">
         <div className="mx-auto max-w-6xl px-4 md:px-6 text-sm text-zinc-500">
-          © {year} Michael M — Built with React & Tailwind. Focused on shipping real value.
+          © {year} Michael M — I do all the stuff to automate life❤️.
+          Focused on shipping real value.
         </div>
       </footer>
     </main>
