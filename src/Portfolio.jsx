@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion }  from "framer-motion";
 import { Github, Mail, Linkedin, Download, ArrowRight, ExternalLink, MapPin, GraduationCap, Code2, TerminalSquare, Cpu, Database } from "lucide-react";
 import KatanaSlash from "./KatanaSlash";
 
@@ -412,12 +412,13 @@ export default function Portfolio() {
       </section>
 
       {/* FOOTER */}
-      <footer className="py-10">
-        <div className="mx-auto max-w-6xl px-4 md:px-6 text-sm text-zinc-500">
-          © {year} Michael M — I do all the stuff to automate life❤️.
-          Focused on shipping real value.
-        </div>
-      </footer>
+<footer className="py-10">
+  <div className="mx-auto max-w-6xl px-4 md:px-6 text-sm text-zinc-500">
+    © {year} Michael M — I do all the stuff to automate life❤️.
+    Focused on shipping real value.
+  </div>
+</footer>
+
     </main>
   );
 }
